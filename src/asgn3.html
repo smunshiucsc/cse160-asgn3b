@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 3: Gold Block Game</title>
+    <!-- This following Style sheet is adapted from ChatGPT. I needed CSS code, but I didn't know how to code in CSS.-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #timer {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #goldCount {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #message {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+
+</head>
+<!-- I used Copilot to assist in creating some (but not all) of this script code.-->
+<div id="message">Find all 20 Gold Blocks without stepping in the void! P.S: Bonus points if You can find the pig! (Hint: When Pigs fly)</div>
+    <div id="timer">1:00</div>
+    <button onclick="incrementGoldCount()">Found a Gold Block!</button>
+    <div id="goldCount">Gold Blocks Found: 0</div>
+
+    <script>
+        let time = 60;
+        let found_blocks = 0;
+        let timer;
+
+        function startTimer() {
+            timer = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            time--;
+            let minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            document.getElementById("timer").textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+            if (time === 0) {
+                clearInterval(timer);
+                document.getElementById("timer").textContent = "0:00";
+                document.getElementById("message").textContent = "You failed. Refresh the page to try again!";
+            }
+        }
+
+        function incrementGoldCount() {
+            found_blocks++;
+            document.getElementById("goldCount").textContent = `Gold Blocks Found: ${found_blocks}`;
+
+            if (found_blocks === 20) {
+                clearInterval(timer);
+                document.getElementById("message").textContent = "You passed!";
+            }
+        }
+
+        window.onload = function() {
+            startTimer();
+        };
+    </script>
+    
+<body onload="main()" id="body">
+    <div class="row">
+        </div>
+        <div class="column">
+            <canvas id="webgl" width="700" height="700">
+                Please use a browser that supports "canvas"
+            </canvas>
+        </div>
+    </div>
+    
+    <p id="numdot" style="display: inline"></p>
+    
+    <p>Grader Notes: This is my Minecraft block world. This world utilizes 5 textures: the grass
+        , the obsidian walls, cobblestone, gold blocks, and the void. The objective of this game is to 
+        locate all 20 gold blocks in a minute. The player can move around the world using the arrow keys. There
+        is a pig hidden in the world. (Hint: When Pigs Fly). Extra detials: The "wow" factor of this world is not only
+        did I add an additional game/more textures, but I expirimented with texture blending. The borders of the grass is 
+        blended with the void texture to create a dark texture, but still on the same plane. Also, I created the "moon" in the sky
+        as well (Cube).  
+    </p>
+    
+    <script src="../lib/webgl-utils.js"></script>
+    <script src="../lib/webgl-debug.js"></script>
+    <script src="../lib/cuon-utils.js"></script>
+    <script src="../lib/cuon-matrix-cse160.js"></script>
+    <script src="triangle.js"></script>
+    <script src="cube.js"></script>
+    <script src="camera.js"></script>
+    <script src="asgn3.js"></script>
+    <script src="cylinder.js"></script>
+
+    
+</body>
+</html>
